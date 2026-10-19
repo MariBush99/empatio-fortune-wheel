@@ -22,8 +22,8 @@ function randomIndex(){const value=new Uint32Array(1),limit=Math.floor(429496729
 button.addEventListener('click',async()=>{
  if(busy)return;busy=true;button.disabled=true;button.textContent='Колесо крутится…';outcome.textContent='✦';
  const index=randomIndex(),jitter=(Math.random()-.5)*sector*.5,target=((360-index*sector-sector/2+jitter)%360+360)%360;
- const next=angle+360*6+((target-angle%360+360)%360);
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
- try{const animation=wheel.animate([{transform:`rotate(${angle}deg)`},{transform:`rotate(${next}deg)`}],{duration:reduced?120:4800,easing:'cubic-bezier(.12,.75,.12,1)',fill:'forwards'});await animation.finished;wheel.style.transform=`rotate(${next}deg)`;animation.cancel();angle=next;outcome.textContent=`${icons[index]} ${prizes[index]}`;}
+ const next=angle+360*(reduced?2:6)+((target-angle%360+360)%360);
+ try{const animation=wheel.animate([{transform:`rotate(${angle}deg)`},{transform:`rotate(${next}deg)`}],{duration:reduced?3200:5200,easing:'cubic-bezier(.2,.65,.15,1)',fill:'forwards'});await animation.finished;wheel.style.transform=`rotate(${next}deg)`;animation.cancel();angle=next;outcome.textContent=`${icons[index]} ${prizes[index]}`;}
  finally{busy=false;button.disabled=false;button.textContent='Вращать ещё ↗';}
 });
